@@ -21,6 +21,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/longdog/usesse.git"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "vite",
