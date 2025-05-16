@@ -7,9 +7,9 @@ A lightweight React hook for consuming Server-Sent Events (SSE) with ease.
 Install the library using npm or yarn:
 
 ```bash
-npm install usesse
+npm install @longdog/usesse
 # or
-yarn add usesse
+yarn add @longdog/usesse
 ```
 
 ## Usage
