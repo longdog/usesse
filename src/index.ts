@@ -35,14 +35,18 @@ const makeSSESource = (url: string, event: string) => {
   };
 };
 
-export const makeUseSSE = <T>(url: string, event: string) => {
+export const makeUseSSE = <T>(
+  url: string,
+  event: string,
+  reviver?: (data: string) => T
+) => {
   return () => {
     const sse = useMemo(() => makeSSESource(url, event), []);
     const rawData = useSyncExternalStore(sse.subscribe, sse.getVal);
     let data: T | undefined = undefined;
     if (rawData && typeof rawData === "string") {
       try {
-        data = JSON.parse(rawData) as T;
+        data = reviver ? reviver(rawData) : (JSON.parse(rawData) as T);
       } catch {
         /* */
       }

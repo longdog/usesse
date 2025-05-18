@@ -15,6 +15,10 @@ yarn add @longdog/usesse
 ## Usage
 
 ```tsx
+// JSON data
+
+import { makeUseSSE } from "@longdog/usesse";
+
 type ServerTime = {
   time: string;
 };
@@ -31,10 +35,27 @@ function App() {
 }
 ```
 
+```jsx
+// String data
+// This example demonstrates how to use the `reviver` function to handle string data.
+
+import { makeUseSSE } from "@longdog/usesse";
+const useSSE =
+  makeUseSSE < string > ("/api/sse", "string-update", (data) => data);
+function App() {
+  const data = useSSE();
+  return (
+    <>
+      <div>{data || "no string data"}</div>
+    </>
+  );
+}
+```
+
 ## API
 
 ```typescript
-makeUseSSE<T>(url: string, event: string)
+makeUseSSE<T>(url: string, event: string, reviver?: (data: string) => T)
 ```
 
 Creates a custom hook for consuming SSE.
@@ -42,6 +63,12 @@ Creates a custom hook for consuming SSE.
 - `url`: The URL of the SSE endpoint.
 
 - `event`: The name of the SSE event to listen for.
+
+- `reviver`: An optional function to transform the raw data before parsing.
+  It takes a string and returns the parsed data of type T.
+  This is useful for handling custom data formats or parsing logic.
+  If not provided, the data will be parsed as JSON.
+  The reviver function should return the parsed data of type T.
 
 Returns a React hook that provides the latest parsed data of type T.
 
