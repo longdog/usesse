@@ -1,7 +1,7 @@
 {
   "name": "@longdog/usesse",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "A React hook for Server-Sent Events (SSE).",
   "author": "Denis Abrosimov <denis.abrosimov@gmail.com>",
@@ -32,11 +32,13 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
   },
   "devDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "vite-plugin-dts": "^4.5.4",
     "@types/node": "^22.15.18",
     "@eslint/js": "^9.25.0",
