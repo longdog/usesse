@@ -1,4 +1,4 @@
-import { useDeferredValue, useMemo, useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 
 const makeSSESource = (url: string, event: string) => {
   let evtSource: EventSource | null = null;
@@ -43,14 +43,16 @@ export const makeUseSSE = <T>(
   return () => {
     const sse = useMemo(() => makeSSESource(url, event), []);
     const rawData = useSyncExternalStore(sse.subscribe, sse.getVal);
-    let data: T | undefined = undefined;
-    if (rawData && typeof rawData === "string") {
-      try {
-        data = reviver ? reviver(rawData) : (JSON.parse(rawData) as T);
-      } catch {
-        /* */
+    const data: T | undefined = useMemo(() => {
+      if (rawData && typeof rawData === "string") {
+        try {
+          return reviver ? reviver(rawData) : (JSON.parse(rawData) as T);
+        } catch {
+          /* */
+        }
       }
-    }
-    return useDeferredValue(data);
+      return undefined;
+    }, [rawData]);
+    return data;
   };
 };
